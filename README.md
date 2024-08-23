@@ -1,6 +1,14 @@
-# Missing Tests
+# Missing Tests (CURRENTLY ALPHA, LIKELY UNSTABLE)
 
-This package helps to identify typescript modules that are missing unit tests. The philosophy of this package is that EVERY module should have a corresponding tests file, even if it's only to measure the line count. 
+Aiming for 100% code 
+
+## Assumptions
+
+This package is still beta and is taylored to fit my particular coding style. I'll likely expand it in the future but for now it operates on a few assumptions.
+
+1. You are using a mirror, and not neighbor strategy for storing your test files.
+2. You name your modules as `myModule.ts` and it's corresponding test as `myModule.test.ts` (of course stored in the mirrored path).
+3. There are zero directories/files you want to exclude 
 
 ## Installation
 
@@ -8,16 +16,32 @@ First install the package `npm i -g missing-tests`.
 
 ## Usage
 
-To call the utility you can run: 
+Call the CLI Help:
 
-`missing-commits SRC_MODULE  TEST_MODULE`
+```
+> npx missing-tests --help
+Usage: missing-tests [options]
 
-If you omit the arguments for each module the utility will assume you mean ./src and ./tests/unit.
+A simple CLI tool for figuring out if you have test files for each ts module in your project
 
-> ⚠️ The expectation is that SRC_MODULE and TEST_MODULE will MIRROR EACH OTHER WITH ONLY A DIFFERENCE IN THEIR FILE EXTENSION (.ts vs .test.ts) , if this is NOT the case you're going to have a bad time...⚠️
-> Passing the arguements above is your asserting that these are the common roots to be mirrored.
+Options:
+  -V, --version                output the version number
+  -s, --srcFile <srcFile>      Source file path (default: "./src")
+  -t, --testsFile <testsFile>  Tests file path (default: "./tests")
+  -d, --debug                  Debug mode
+  -c, --create                 Create missing test files
+  -h, --help                   display help for command
+```
 
-The utility will then comb each of these trees assuming they are intended to mirror each other. For instance, if you have a `./src/utils/index.ts` you should also have a `./tests/unit/utils/index.test.ts`. If you have a `./src/components/logger/index.ts` but no `./tests/uxnit/components/logger/index.test.ts` that should be reported.
+Call the utility using all defaults:
+
+`> npx missing-tests`
+
+Call the utility providing the src code and test code file which constitute either half of your mirror structure.
+
+`npx missing-tests --srcFile path/to/src-code --testsFile path/to/test/directory` 
+
+The utility will then comb each of these trees assuming they are intended to mirror each other. For instance, if you have a `./src/utils/index.ts` you should also have a `./tests/utils/index.test.ts`. If you have a `./src/components/logger/index.ts` but no test file, that will show up as NULL.
 
 ### Suggested Use
 
