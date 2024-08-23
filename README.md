@@ -15,6 +15,7 @@ To call the utility you can run:
 If you omit the arguments for each module the utility will assume you mean ./src and ./tests/unit.
 
 > ⚠️ The expectation is that SRC_MODULE and TEST_MODULE will MIRROR EACH OTHER WITH ONLY A DIFFERENCE IN THEIR FILE EXTENSION (.ts vs .test.ts) , if this is NOT the case you're going to have a bad time...⚠️
+> Passing the arguements above is your asserting that these are the common roots to be mirrored.
 
 The utility will then comb each of these trees assuming they are intended to mirror each other. For instance, if you have a `./src/utils/index.ts` you should also have a `./tests/unit/utils/index.test.ts`. If you have a `./src/components/logger/index.ts` but no `./tests/uxnit/components/logger/index.test.ts` that should be reported.
 
