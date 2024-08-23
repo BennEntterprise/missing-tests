@@ -21,7 +21,6 @@ program
 program.parse(process.argv);
 const options = program.opts();
 
-
 export const logger = new Logger(options.debug);
 export const srcDir = options.srcFile;
 export const testsDir = options.testsFile;
@@ -74,11 +73,14 @@ const missingTests = Object.entries(results).filter(([_, testFile]) => testFile 
 const missingTestsCount = missingTests.length;
 const totalFiles = srcFiles.length;
 const testCoverage = (totalFiles - missingTestsCount) / totalFiles * 100;
+
 console.log("")
 console.log(`Total Files: ${totalFiles}`);
 console.log(`Missing Tests: ${missingTestsCount}`);
 console.log(`Test Coverage: ${testCoverage.toFixed(2)}%`);
 console.log("")
 console.log("")
-console.log("If you'd like to automatically create the test files for any NULL results, run the same command with -c or --create flag")
+if (missingTestsCount > 0 && !options.create) {
+    console.log("If you'd like to automatically create the test files for any NULL results, run the same command with -c or --create flag")
+}
 console.log("")
