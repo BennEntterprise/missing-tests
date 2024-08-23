@@ -43,14 +43,13 @@ if (!fs.existsSync(testsDir)) {
 
 logger.log('Getting src files list');
 const srcFiles = getSrcFilesList(srcDir);
-logger.log(`Found ${srcFiles.length} source files`);
+console.log(`Found ${srcFiles.length} source file(s)`);
+logger.log('srcFiles:', srcFiles);
 
 logger.log('Getting tests files list');
 const testFiles = getTestFiles(testsDir);
-logger.log(`Found ${testFiles.length} test files`);
-
-console.log('srcFiles:', srcFiles);
-console.log('testFiles:', testFiles);
+console.log(`Found ${testFiles.length} test file(s)`);
+logger.log('testFiles:', testFiles);
 
 const results: Record<string, null | string> = {};
 
@@ -67,7 +66,7 @@ for (const srcFile of srcFiles) {
     }
 }
 
-console.log('Results:', results);
+console.log('Results Flat Map:', results);
 
 if (options.create) {
     createTestFilesForMissingResults(results);
@@ -80,12 +79,19 @@ const totalFiles = srcFiles.length;
 const testCoverage = (totalFiles - missingTestsCount) / totalFiles * 100;
 
 console.log("")
-console.log(`Total Files: ${totalFiles}`);
-console.log(`Missing Tests: ${missingTestsCount}`);
-console.log(`Test Coverage: ${testCoverage.toFixed(2)}%`);
+console.log(`Total Source Files: ${totalFiles}`);
+console.log(`Source Files Missing Test File: ${missingTestsCount}`);
+console.log(`File Coverage: ${testCoverage.toFixed(2)}%`);
 console.log("")
-console.log("")
+
 if (missingTestsCount > 0 && !options.create) {
-    console.log("If you'd like to automatically create the test files for any NULL results, run the same command with -c or --create flag")
+    const logMsg = [
+        'If you\'d like to automatically create the test files for any',
+        "NULL results, run the same command with -c or--create flag",
+        '   Example: npx missing-tests -s ./src -t ./tests -c.',
+        "",
+        "Or you can use this output to manually create the test files."
+    ]
+    console.log(logMsg.join('\n'));
 }
 console.log("")

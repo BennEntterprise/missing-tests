@@ -10,7 +10,7 @@ export const jestTemplate = (relPath: string) => {
         // import * as SUT from '${relPath}';
 
         describe('SYSTEM_UNDER_TEST', () => {
-            test('should do something', () => {
+            test.skip('should do something', () => {
                 expect('SYSTEM_UNDER_TEST').toBeDefined();
             });
         });
