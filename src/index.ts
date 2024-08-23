@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { Logger } from './logger';
+import { Logger } from './utils/logger';
 import packageJSON from '../package.json';
 import fs from 'node:fs';
+import { getSrcFilesList } from './utils/parsers/getSrcFilestList';
+import { getTestFiles } from './utils/parsers/getTestFilesList';
+import { createTestFilesForMissingResults } from './utils/createTestFilesForMissingResults';
 
 
 // Command Setup
@@ -17,11 +20,11 @@ program
     .option('-c, --create', 'Create missing test files');
 program.parse(process.argv);
 const options = program.opts();
-// Instantiate the logger if debug was passed
-const logger = new Logger(options.debug);
 
-const srcDir = options.srcFile;
-const testsDir = options.testsFile;
+
+export const logger = new Logger(options.debug);
+export const srcDir = options.srcFile;
+export const testsDir = options.testsFile;
 
 // Ensure both files exist
 logger.log(`Checking for test files in ${testsDir} and source files in ${srcDir}`)
@@ -32,48 +35,6 @@ if (!fs.existsSync(srcDir)) {
 if (!fs.existsSync(testsDir)) {
     console.error(`Tests directory does not exist: ${testsDir}`);
     process.exit(1);
-}
-
-
-function getSrcFilesList(srcDir: string): Array<string> {
-    // For each directory, get the files in that directory, for any directories, call this function recursively
-    const files = fs.readdirSync(srcDir);
-    const srcFiles: Array<string> = [];
-
-    for (const file of files) {
-        const fullPath = `${srcDir}/${file}`;
-        // Put the path into our array
-        srcFiles.push(fullPath);
-        // If it's a directory, call this function recursively
-        if (fs.statSync(fullPath).isDirectory()) {
-            srcFiles.push(...getSrcFilesList(fullPath));
-        }
-    }
-
-    const filteredFiles = srcFiles.filter((file) => file.endsWith('.ts'));
-    return filteredFiles.sort();
-}
-
-// Walk the tests directory, and find all of it's .ts files, putting each in an array
-// The array should be sorted alphabetically
-// Return the array
-function getTestFiles(testsDir: string): string[] {
-    // For each directory, get the files in that directory, for any directories, call this function recursively
-    const files = fs.readdirSync(testsDir);
-    const testFiles: string[] = [];
-
-    for (const file of files) {
-        const fullPath = `${testsDir}/${file}`;
-        // Put the path into our array
-        testFiles.push(fullPath);
-        // If it's a directory, call this function recursively
-        if (fs.statSync(fullPath).isDirectory()) {
-            testFiles.push(...getTestFiles(fullPath));
-        }
-    }
-
-    const filteredFiles = testFiles.filter((file) => file.endsWith('.ts'));
-    return filteredFiles.sort();
 }
 
 logger.log('Getting src files list');
@@ -104,16 +65,6 @@ for (const srcFile of srcFiles) {
 
 console.log('Results:', results);
 
-// If the create flag was passed, create any missing test files
-function createTestFilesForMissingResults(results: Record<string, null | string>) {
-    for (const [srcFile, testFile] of Object.entries(results)) {
-        if (testFile === null) {
-            const newTestFile = srcFile.replace(srcDir, testsDir).replace('.ts', '.test.ts');
-            fs.writeFileSync(newTestFile, '');
-            logger.log(`Created new test file: ${newTestFile}`);
-        }
-    }
-}
 if (options.create) {
     createTestFilesForMissingResults(results);
 }
