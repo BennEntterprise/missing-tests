@@ -1,6 +1,6 @@
 {
   "name": "missing-tests",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "description": "",
   "bin": {
     "missing-tests": "./dist/src/index.js"
