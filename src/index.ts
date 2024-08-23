@@ -82,13 +82,13 @@ logger.log('Found Test Files', getTestFiles(testsDir));
 // If there is, set the value of the key to the path of the test file
 // If there isn't, set the value of the key to null
 // example: 
-// src/index.ts -> tests/src/index.test.ts is a MATCH
-// src/logger.ts -> tests/src/logger.test.ts is a MATCH
-// src/utils.ts -> NO TEST FILE FOUND is not a match
+// <srcDir>/index.ts -> <testsDir>/index.test.ts is a MATCH
+// <srcDir>/logger.ts -> <testsDir>/logger.test.ts is a MATCH
+// <srcDir>/utils.ts -> NO TEST FILE FOUND is not a match
 // Return the object
 function compareSrcAndTestFiles(srcFiles: Record<string, string | null>, testFiles: string[]): Record<string, string | null> {
     for (const srcFile in srcFiles) {
-        const testFile = testFiles.find((file) => file === srcFile.replace('src', 'tests').replace('.ts', '.test.ts'));
+        const testFile = testFiles.find((file) => file === srcFile.replace(srcDir, testsDir).replace('.ts', '.test.ts'));
         srcFiles[srcFile] = testFile || 'NO TEST FILE FOUND';
     }
     return srcFiles;
