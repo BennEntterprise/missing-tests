@@ -32,8 +32,13 @@ if (!fs.existsSync(srcDir)) {
     process.exit(1);
 }
 if (!fs.existsSync(testsDir)) {
-    console.error(`Tests directory does not exist: ${testsDir}`);
-    process.exit(1);
+    if (options.create) {
+        fs.mkdirSync(testsDir, { recursive: true });
+        logger.log(`Did not find ${testsDir}, creating it now`);
+    } else {
+        console.error(`Tests directory does not exist: ${testsDir}`);
+        process.exit(1);
+    }
 }
 
 logger.log('Getting src files list');
