@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "bin": {
-    "missing-tests": "./dist/index.js"
+    "missing-tests": "./dist/src/index.js"
   },
-  "main": "./dist/index.js",
+  "main": "./dist/src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
@@ -13,6 +13,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^22.5.0",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
   }
 }
