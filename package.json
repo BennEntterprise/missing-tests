@@ -2,10 +2,17 @@
   "name": "missing-tests",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "bin": {
+    "missing-tests": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  }
 }
