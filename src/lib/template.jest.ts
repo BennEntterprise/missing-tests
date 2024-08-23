@@ -7,11 +7,11 @@ import { logger } from '../index'
 export const jestTemplate = (relPath: string) => {
     return `
         import { describe, expect, test } from '@jest/globals';
-        import * as SUT from '${relPath}';
+        // import * as SUT from '${relPath}';
 
         describe('SYSTEM_UNDER_TEST', () => {
             test('should do something', () => {
-                expect(SUT).toBeDefined();
+                expect('SYSTEM_UNDER_TEST').toBeDefined();
             });
         });
     `

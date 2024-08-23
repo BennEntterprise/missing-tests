@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import { logger, srcDir, testsDir } from '../index';
+import { jestTemplate } from '../lib/template.jest';
 // If the create flag was passed, create any missing test files
 function createTestFilesForMissingResults(results: Record<string, null | string>) {
     for (const [srcFile, testFile] of Object.entries(results)) {
@@ -13,7 +14,8 @@ function createTestFilesForMissingResults(results: Record<string, null | string>
             } else {
                 logger.log(`Found: ${newTestDir}, no need to create it`);
             }
-            fs.writeFileSync(newTestFile, '');
+
+            fs.writeFileSync(newTestFile, `${jestTemplate('')}`);
             logger.log(`Created new test file: ${newTestFile}`);
         }
     }
