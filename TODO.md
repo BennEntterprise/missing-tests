@@ -14,7 +14,6 @@ This todo file represents items that should be addressed for this package. They 
 
 # Bugs
 
-- turn logger into a singleton so it can be used everywhere and not need an export from index
 - (template.jest.ts) it should have a skipped test so that it shows up on --verbose output
 - (template.jest.ts) automatically reference the source code file (relative references were giving me a hard time today).
 
@@ -27,3 +26,4 @@ This todo file represents items that should be addressed for this package. They 
 # DONE
 
 -  2024-08-23 - (template.jest.ts) it should have a skipped test so that it shows up on --verbose output
+-  2024-08-25 T 17:34:07 turn logger into a singleton so it can be used everywhere and not need an export from index

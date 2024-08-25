@@ -22,7 +22,7 @@ program
 program.parse(process.argv);
 const options = program.opts();
 
-export const logger = new Logger(options.debug);
+export const logger = Logger.getInstance(options.debug);
 export const srcDir = options.srcFile;
 export const testsDir = options.testsFile;
 

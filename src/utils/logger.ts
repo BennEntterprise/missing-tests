@@ -2,10 +2,18 @@
 // The default value should be false
 
 export class Logger {
+    private static instance: Logger;
     debug: boolean;
 
-    constructor(debug = false) {
+    private constructor(debug = false) {
         this.debug = debug;
+    }
+
+    static getInstance(debug = false): Logger {
+        if (!Logger.instance) {
+            Logger.instance = new Logger(debug);
+        }
+        return Logger.instance;
     }
 
     log(message: string, ...args: any[]) {
