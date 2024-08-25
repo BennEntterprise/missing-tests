@@ -20,7 +20,7 @@ program
     .option('-d, --debug', 'Debug mode')
     .option('-c, --create', 'Create missing test files');
 program.parse(process.argv);
-const options = program.opts();
+export const options = program.opts();
 
 export const logger = Logger.getInstance(options.debug);
 export const srcDir = options.srcFile;
