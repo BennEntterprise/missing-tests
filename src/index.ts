@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import { getSrcFilesList } from './utils/parsers/getSrcFilestList';
 import { getTestFiles } from './utils/parsers/getTestFilesList';
 import { createTestFilesForMissingResults } from './utils/createTestFilesForMissingResults';
+import { printSummary } from './utils/printers/printSummary';
 
 
 // Command Setup
@@ -78,20 +79,6 @@ const missingTestsCount = missingTests.length;
 const totalFiles = srcFiles.length;
 const testCoverage = (totalFiles - missingTestsCount) / totalFiles * 100;
 
-console.log("")
-console.log(`Total Source Files: ${totalFiles}`);
-console.log(`Source Files Missing Test File: ${missingTestsCount}`);
-console.log(`File Coverage: ${testCoverage.toFixed(2)}%`);
-console.log("")
+printSummary(totalFiles, missingTestsCount, testCoverage.toFixed(2), options.create);
 
-if (missingTestsCount > 0 && !options.create) {
-    const logMsg = [
-        'If you\'d like to automatically create the test files for any',
-        "NULL results, run the same command with -c or--create flag",
-        '   Example: npx missing-tests -s ./src -t ./tests -c.',
-        "",
-        "Or you can use this output to manually create the test files."
-    ]
-    console.log(logMsg.join('\n'));
-}
-console.log("")
+

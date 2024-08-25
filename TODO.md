@@ -8,6 +8,7 @@ This todo file represents items that should be addressed for this package. They 
 - if the test file doesn't exist ask the user if they would like it created, if not then exit.
 - allow for additional testTemplates and implement using a GoF Strategy pattern?
 - support "neighbor" test method search
+- for create mode, ask if they should be created in bulk, or one-at a time. If the latter, then go through the prompting to create each test.
 - add chalk to color the output and make it more friendly
 - add figlet header on the output
 
