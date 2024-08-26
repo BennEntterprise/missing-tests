@@ -1,6 +1,12 @@
 // Create a simple logger class which takes 1 constructor parameter, debug, which is a boolean. If debug is true, the logger should log the message to the console. If debug is false, the logger should not log the message to the console.
 // The default value should be false
 
+/**
+ * @class Logger
+ * @description A Logger singlton class which optionally 
+ * takes 1 constructor parameter, debug, which is a boolean. 
+ * @param debug - boolean - default falsek
+ */
 export class Logger {
     private static instance: Logger;
     debug: boolean;

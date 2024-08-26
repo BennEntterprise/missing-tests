@@ -8,7 +8,7 @@ import { getSrcFilesList } from './utils/parsers/getSrcFilestList';
 import { getTestFiles } from './utils/parsers/getTestFilesList';
 import { createTestFilesForMissingResults } from './utils/createTestFilesForMissingResults';
 import { printSummary } from './utils/printers/printSummary';
-
+import { ensureSuppliedDirectoriesExist } from './utils/validators/ensureSuppliedDirectoriesExist';
 
 // Command Setup
 const program = new Command();
@@ -20,27 +20,22 @@ program
     .option('-d, --debug', 'Debug mode')
     .option('-c, --create', 'Create missing test files');
 program.parse(process.argv);
-export const options = program.opts();
+const opts = program.opts();
+
+export const options = {
+    srcDir: opts.srcFile,
+    testsDir: opts.testsFile,
+    debug: opts.debug,
+    create: opts.create
+};
 
 export const logger = Logger.getInstance(options.debug);
-export const srcDir = options.srcFile;
-export const testsDir = options.testsFile;
 
-// Ensure both files exist
-logger.log(`Checking for test files in ${testsDir} and source files in ${srcDir}`)
-if (!fs.existsSync(srcDir)) {
-    console.error(`Source directory does not exist: ${srcDir}`);
-    process.exit(1);
-}
-if (!fs.existsSync(testsDir)) {
-    if (options.create) {
-        fs.mkdirSync(testsDir, { recursive: true });
-        logger.log(`Did not find ${testsDir}, creating it now`);
-    } else {
-        console.error(`Tests directory does not exist: ${testsDir}`);
-        process.exit(1);
-    }
-}
+export const srcDir = opts.srcFile;
+export const testsDir = opts.testsFile;
+
+ensureSuppliedDirectoriesExist();
+
 
 logger.log('Getting src files list');
 const srcFiles = getSrcFilesList(srcDir);
@@ -80,5 +75,3 @@ const totalFiles = srcFiles.length;
 const testCoverage = (totalFiles - missingTestsCount) / totalFiles * 100;
 
 printSummary(totalFiles, missingTestsCount, testCoverage.toFixed(2), options.create);
-
-
