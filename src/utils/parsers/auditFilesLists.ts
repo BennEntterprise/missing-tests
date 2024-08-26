@@ -1,6 +1,10 @@
 import { srcDir, testsDir } from '../../index';
 
-export const auditFilesLists = (srcFiles: Array<string>, testFiles: Array<string>) => {
+export type ResultsType = {
+    [key: string]: null | string;
+}
+
+export const auditFilesLists = (srcFiles: Array<string>, testFiles: Array<string>): ResultsType => {
     const results: Record<string, null | string> = {};
 
     // Using the srcFiles as our left join, loop through and discern if there is a test file for each src file

@@ -45,10 +45,4 @@ if (options.create) {
     createTestFilesForMissingResults(results);
 }
 
-// Summarize the Results
-const missingTests = Object.entries(results).filter(([_, testFile]) => testFile === null);
-const missingTestsCount = missingTests.length;
-const totalFiles = srcFiles.length;
-const testCoverage = (totalFiles - missingTestsCount) / totalFiles * 100;
-
-printSummary(totalFiles, missingTestsCount, testCoverage.toFixed(2), options.create);
+printSummary(results);
