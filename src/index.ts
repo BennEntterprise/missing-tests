@@ -3,7 +3,6 @@
 import { Command } from 'commander';
 import { Logger } from './utils/logger';
 import packageJSON from '../package.json';
-import fs from 'node:fs';
 import { getSrcFilesList } from './utils/parsers/getSrcFilestList';
 import { getTestFilesList } from './utils/parsers/getTestFilesList';
 import { createTestFilesForMissingResults } from './utils/createTestFilesForMissingResults';
@@ -22,6 +21,8 @@ program
     .option('-c, --create', 'Create missing test files');
 program.parse(process.argv);
 const opts = program.opts();
+
+// TODO: I'd like to clean this up but when I tried to export the opts object from the program.opts() call, it was not working. Need to spend some time. I suspect it's a JS-ism. 
 
 export const options = {
     srcDir: opts.srcFile,

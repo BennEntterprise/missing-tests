@@ -32,3 +32,4 @@ This todo file represents items that should be addressed for this package. They 
 
 -  2024-08-23 - (template.jest.ts) it should have a skipped test so that it shows up on --verbose output
 -  2024-08-25 T 17:34:07 turn logger into a singleton so it can be used everywhere and not need an export from index
+-  2024-08-25 T 21:40:35 General cleanup/code splitting
