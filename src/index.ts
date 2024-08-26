@@ -9,6 +9,7 @@ import { getTestFilesList } from './utils/parsers/getTestFilesList';
 import { createTestFilesForMissingResults } from './utils/createTestFilesForMissingResults';
 import { printSummary } from './utils/printers/printSummary';
 import { ensureSuppliedDirectoriesExist } from './utils/validators/ensureSuppliedDirectoriesExist';
+import { auditFilesLists } from './utils/parsers/auditFilesLists';
 
 // Command Setup
 const program = new Command();
@@ -38,23 +39,7 @@ ensureSuppliedDirectoriesExist();
 
 const srcFiles = getSrcFilesList(srcDir);
 const testFiles = getTestFilesList(testsDir);
-
-const results: Record<string, null | string> = {};
-
-// Using the srcFiles as our left join, loop through and discern if there is a test file for each src file
-for (const srcFile of srcFiles) {
-    // Reconstruct the path to the test file. 
-    // Remove the srcDir from the srcFile path, replace it with the testDir, and replace the .ts with .test.ts
-    const searchTarget = srcFile.replace(srcDir, testsDir).replace('.ts', '.test.ts');
-    // Check if the test file exists
-    if (testFiles.includes(searchTarget)) {
-        results[srcFile] = searchTarget;
-    } else {
-        results[srcFile] = null;
-    }
-}
-
-console.log('Results Flat Map:', results);
+const results = auditFilesLists(srcFiles, testFiles)
 
 if (options.create) {
     createTestFilesForMissingResults(results);
