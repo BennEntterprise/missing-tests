@@ -11,7 +11,7 @@ const logger = Logger.getInstance();
  */
 export const ensureSuppliedDirectoriesExist = () => {
     const { srcDir, testsDir } = options;
-    console.log(srcDir, testsDir)
+
     logger.log(`Checking for test files in ${testsDir} and source files in ${srcDir}`)
     if (!fs.existsSync(srcDir)) {
         console.error(`Source directory does not exist: ${srcDir}`);

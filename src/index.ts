@@ -5,7 +5,7 @@ import { Logger } from './utils/logger';
 import packageJSON from '../package.json';
 import fs from 'node:fs';
 import { getSrcFilesList } from './utils/parsers/getSrcFilestList';
-import { getTestFiles } from './utils/parsers/getTestFilesList';
+import { getTestFilesList } from './utils/parsers/getTestFilesList';
 import { createTestFilesForMissingResults } from './utils/createTestFilesForMissingResults';
 import { printSummary } from './utils/printers/printSummary';
 import { ensureSuppliedDirectoriesExist } from './utils/validators/ensureSuppliedDirectoriesExist';
@@ -36,16 +36,8 @@ export const testsDir = opts.testsFile;
 
 ensureSuppliedDirectoriesExist();
 
-
-logger.log('Getting src files list');
 const srcFiles = getSrcFilesList(srcDir);
-console.log(`Found ${srcFiles.length} source file(s)`);
-logger.log('srcFiles:', srcFiles);
-
-logger.log('Getting tests files list');
-const testFiles = getTestFiles(testsDir);
-console.log(`Found ${testFiles.length} test file(s)`);
-logger.log('testFiles:', testFiles);
+const testFiles = getTestFilesList(testsDir);
 
 const results: Record<string, null | string> = {};
 

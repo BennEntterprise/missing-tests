@@ -1,6 +1,17 @@
 import fs from 'node:fs'
+import { Logger } from '../logger';
 
+const logger = Logger.getInstance()
+
+/**
+ * @function getSrcFilesList
+ * @description Given a src directory, return a list of all the .ts files in the directory and its subdirectories
+ * @param srcDir - string - the directory to search for .ts files
+ * @returns Array<string> - a list of all the .ts files in the directory and its subdirectories
+ */
 function getSrcFilesList(srcDir: string): Array<string> {
+    logger.log('Getting src files list');
+
     // For each directory, get the files in that directory, for any directories, call this function recursively
     const files = fs.readdirSync(srcDir);
     const srcFiles: Array<string> = [];
@@ -16,6 +27,11 @@ function getSrcFilesList(srcDir: string): Array<string> {
     }
 
     const filteredFiles = srcFiles.filter((file) => file.endsWith('.ts'));
-    return filteredFiles.sort();
+    const sortedFiles = filteredFiles.slice().sort();
+
+    console.log(`Found ${srcFiles.length} source file(s)`);
+    logger.log('srcFiles:', srcFiles);
+
+    return sortedFiles;
 }
 export { getSrcFilesList };
