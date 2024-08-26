@@ -11,7 +11,11 @@ This todo file represents items that should be addressed for this package. They 
 - for create mode, ask if they should be created in bulk, or one-at a time. If the latter, then go through the prompting to create each test.
 - add chalk to color the output and make it more friendly
 - add figlet header on the output
+
+# CI/CD/DevEx
+
 - extend the logger to include console methods and use linter to disallow console everywhere else.
+- install husky and run on commit
 
 # Bugs
 
